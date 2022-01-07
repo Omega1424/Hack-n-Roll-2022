@@ -1,10 +1,14 @@
 from os import kill
 from transformers import pipeline 
 from youtube_transcript_api import YouTubeTranscriptApi 
-import numpy as np
+from selenium import webdriver
+#driver = webdriver.Chrome()
 youtube_video = "https://www.youtube.com/watch?v=A4OmtyaBHFE"
 video_id = youtube_video.split("=")[1]
-
+from selenium.webdriver.chrome.options import Options
+options = Options()
+options.add_argument("--headless")
+driver = webdriver.Chrome(options=options)
 from IPython.display import YouTubeVideo
 YouTubeVideo(video_id)
 time_stamp = 650
@@ -40,7 +44,10 @@ for i in transcript:
     if i['start'] >=truetime_l and i['start']<= truetime_u:
         print (i['text'])
 #truetime, truetime_u)
+video_link = driver.current_url
+current_timestamp = driver.find_elements_by_xpath("//span[@class='ytp-time-current']")[0].text
 
+print(current_timestamp)
 
 
 #for t in transcript:

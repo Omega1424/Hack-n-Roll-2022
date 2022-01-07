@@ -1,20 +1,58 @@
+from os import kill
 from transformers import pipeline 
 from youtube_transcript_api import YouTubeTranscriptApi 
-
+import numpy as np
 youtube_video = "https://www.youtube.com/watch?v=A4OmtyaBHFE"
 video_id = youtube_video.split("=")[1]
 
 from IPython.display import YouTubeVideo
 YouTubeVideo(video_id)
-
+time_stamp = 650
 YouTubeTranscriptApi.get_transcript(video_id)
 transcript = YouTubeTranscriptApi.get_transcript(video_id)
-print(transcript)
+list_time = []
 
-time_stamp = 
+for i in range(len(transcript)):
+    list_time.append(transcript[i]['start'])
+time_diff =[]
+for j in list_time:
+    time_dif = abs(j - time_stamp)
+    time_diff.append(time_dif)
+    if time_dif == min(time_diff):
+        truetime = j
+
+lower_bound = truetime - 10
+upper_bound = truetime + 10
+time_diff_l = []
+for m,k in enumerate(list_time):
+    time_dif_l = abs(k - lower_bound)
+    time_diff_l.append(time_dif_l)
+    if time_dif_l == min(time_diff_l):
+        truetime_l = k
+
+time_diff_u = []
+for n,x in enumerate(list_time):
+    time_dif_u = abs(x - upper_bound)
+    time_diff_u.append(time_dif_u)
+    if time_dif_u == min(time_diff_u):
+        truetime_u = x
+for i in transcript:
+    if i['start'] >=truetime_l and i['start']<= truetime_u:
+        print (i['text'])
+#truetime, truetime_u)
 
 
 
+#for t in transcript:
+    #if t['start']== time_stamp
+ 
+#smallest_difference_index = transcript['start'].argmin()
+#closest_element = transcript[smallest_difference_index]
+#print (closest_element)
+
+#values_list = []
+
+#for i in transcript
 
 #result = ""
 #for i in transcript:
